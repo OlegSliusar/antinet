@@ -4,7 +4,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
    test "invalid submission" do
      get signup_path
      assert_no_difference 'User.count' do
-       assert_select 'form[action="/signup"]'
+       assert_select 'form[action="/users"]'
        post signup_path, params: { user: { name:  "",
                                      email: "user@invalid",
                                      password:              "foo",
@@ -12,6 +12,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
      end
      assert_template 'users/new'
      assert_select 'div#error_explanation'
+     assert_select 'div.alert', "The form contains 4 errors."
      assert_select 'div.field_with_errors', count: 8
    end
 
