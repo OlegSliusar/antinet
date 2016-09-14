@@ -7,7 +7,7 @@ class User < ApplicationRecord
                                    foreign_key: "followed_id",
                                    dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
-  has_many :followers, through: :passive_relationships# , source: :follower
+  has_many :followers, through: :passive_relationships
   attr_accessor :remember_token, :activation_token, :reset_token
   before_save :downcase_email
   before_create :create_activation_digest
@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
   class << self
+
     # Returns the hash digest of the given string.
     def digest(string)
       cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -65,8 +66,6 @@ class User < ApplicationRecord
     self.reset_token = User.new_token
     update_columns(reset_digest: User.digest(reset_token),
                    reset_sent_at: Time.zone.now)
-    # update_attribute(:reset_digest,  User.digest(reset_token))
-    # update_attribute(:reset_sent_at, Time.zone.now)
   end
 
   # Sends password reset email.

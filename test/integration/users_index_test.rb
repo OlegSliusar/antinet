@@ -14,12 +14,14 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     assert_select 'div.pagination'
     first_page_of_users = User.paginate(page: 1)
     first_page_of_users.each do |user|
-      if user == @not_activated       # Don't show in list unactivated users
+      # Don't show in list unactivated users
+      if user == @not_activated
         assert_select 'a[href=?]', user_path(user), count: 0
       else
         assert_select 'a[href=?]', user_path(user), text: user.name
       end
-      unless user == @admin || user == @not_activated   # don't select 'delete' link for unactivated users
+      # Don't select 'delete' link for unactivated users
+      unless user == @admin || user == @not_activated
         assert_select 'a[href=?]', user_path(user), text: 'delete'
       end
     end
