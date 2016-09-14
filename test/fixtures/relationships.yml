@@ -1,0 +1,15 @@
+one:
+  follower: oleh
+  followed: lana
+
+two:
+  follower: oleh
+  followed: malory
+
+three:
+  follower: lana
+  followed: oleh
+
+four:
+  follower: archer
+  followed: oleh
