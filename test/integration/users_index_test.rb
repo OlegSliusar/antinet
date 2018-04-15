@@ -20,7 +20,7 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
       else
         assert_select 'a[href=?]', user_path(user), text: user.name
       end
-      # Don't select 'delete' link for unactivated users
+      # Don't select 'delete' link for admins and unactivated users
       unless user == @admin || user == @not_activated
         assert_select 'a[href=?]', user_path(user), text: 'delete'
       end
